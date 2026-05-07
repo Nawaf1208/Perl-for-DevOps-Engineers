@@ -426,6 +426,8 @@ $\color{green}{\text{Answer}}$
     }
     ```
 
+</details>
+
 ## Perl Files Handle
 
 <details>
