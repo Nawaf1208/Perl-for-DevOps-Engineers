@@ -330,3 +330,155 @@ sub factorial {
 ```
 
 </details>
+
+## Perl Regex
+
+<details>
+<summary><b><i>11.Check if the word `electroencefalografista` exists in a string.</i></b></summary>
+
+$\color{green}{\text{Answer}}$
+
+```Perl
+my $string = "The longest accepted word by RAE is: electroencefalografista";
+if ($string =~ /electroencefalografista/) {                                                         
+    print "Match!";
+}
+```
+
+</details>
+
+<details>
+<summary><b><i>12.Check if the word `electroencefalografista` does not exists in a string.</i></b></summary>
+
+$\color{green}{\text{Answer}}$
+
+```Perl
+my $string = "The longest not accepted word by RAE is: Ciclopentanoperhidrofenantreno";
+if ($string !~ /electroencefalografista/) {
+    print "Does not match!";
+}
+```
+
+</details>
+
+<details>
+<summary><b><i>13.Replace the word amazing.</i>,</b></summary>
+
+$\color{green}{\text{Answer}}$
+
+```Perl
+my $string = "Perl is amazing!";
+$string =~ s/amazing/incredible/;
+print $string;
+# Perl is incredible!
+```
+
+</details>
+
+<details>
+<summary><b><i>14.Extract `hh:mm:ss` with capturing group `()` in the following datetime</i></b></summary>
+
+$\color{green}{\text{Answer}}$
+
+```Perl
+my $date = "Fri Nov 19 20:09:37 CET 2021";
+my @matches = $date =~ /(.*)(\d{2}:\d{2}:\d{2})(.*)/;
+print $matches[1];
+# Output: 20:09:37
+```
+
+</details>
+
+<details>
+<summary><b><i>15.Extract all the elements that are numbers in an array.</i></b></summary>
+
+$\color{green}{\text{Answer}}$
+
+```Perl
+my @array = ('a', 1, 'b', 2, 'c', 3);
+my @numbers = grep (/\d/, @array);    # Note: \d involves more digits than 0-9
+map {print $_ . "\n" } @numbers;
+```
+
+</details>
+
+<details>
+<summary><b><i>16.Print all the linux system users that starts with d or D.</i></b></summary>
+
+$\color{green}{\text{Answer}}$
+
+- With a Perl one liner:
+
+    ```Perl
+    open(my $fh, '<', '/etc/passwd');
+    my @user_info = <$fh>;
+    map { print $& . "\n" if $_ =~ /^d([^:]*)/  } @user_info;
+    close $fh;
+    ```
+
+- Avoiding one-liners:
+
+    ```Perl
+    foreach my $user_line (@user_info) {
+        if ($user_line =~ /^d([^:]*)/) {
+            print $& . "\n";
+        }
+    }
+    ```
+
+## Perl Files Handle
+
+<details>
+<summary><b><i>17.Mention the different modes in File Handling.</i></b></summary>
+
+$\color{green}{\text{Answer}}$
+
+- Read only: `<`
+- Write mode. It creates the file if doesn't exist: `>`
+- Append mode. It creates the file if doesn't exist: `>>`
+- Read and write mode: `+<`
+- Read, clear and write mode. It creates the file if doesn't exist: `+>`
+- Read and append. It creates the file if doesn't exist: `+>>`
+
+</details>
+
+<details>
+<summary><b><i>18.How to write into a file?</i></b></summary>
+
+$\color{green}{\text{Answer}}$
+
+```Perl
+# We can use:
+# '>' Write (it clears a previous content if exists).
+# '>>' Append.
+open(my $fh, '>>', 'file_name.ext') or die "Error: file can't be opened";
+print $fh "writing text...\n";
+close($fh);
+```
+
+</details>
+
+<details>
+<summary><b><i>19.How can you read a file and print every line?</i></b></summary>
+
+$\color{green}{\text{Answer}}$
+
+```Perl
+open(my $fh, '<', 'file_to_read.ext') or die "Error: file can't be opened";
+my @file = <$fh>;
+foreach my $line (@file) {
+    print $line;
+}
+```
+
+We can use the file handle without assigning it to an array:
+
+```Perl
+open(my $fh, '<', 'file_to_read.ext') or die "Error: file can't be opened";
+
+foreach my $line (<$fh>) {
+    print $line;
+}
+```
+
+</details>
