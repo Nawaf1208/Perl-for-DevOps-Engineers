@@ -485,4 +485,285 @@ foreach my $line (<$fh>) {
 
 </details>
 
-## 
+## Perl OOP
+
+<details>
+<summary><b><i>20.Does Perl have support for OOP?</i></b></summary>
+
+$\color{green}{\text{Answer}}$
+
+"By default, Perl's built-in OO system is very minimal, leaving you to do most of the work."
+
+</details>
+
+<details>
+<summary><b><i>21.What is the purpose of the bless function?</i></b></summary>
+
+$\color{green}{\text{Answer}}$
+
+The function os the bless function is used to turning a plain data structure into an object.
+
+</details>
+
+<details>
+<summary><b><i>22.How to create a Perl class? How can you call a method?</i></b></summary>
+
+$\color{green}{\text{Answer}}$
+
+- Let's create the package: `Example.pm`
+
+  ```Perl
+  package Example;
+
+  sub new {
+    my $class = shift;
+    my $self = {};
+    bless $self, $class;
+    return $self;
+  }
+
+  sub is_working {
+    print "Working!";
+  }
+
+  1;
+
+- Now we can instance the Example class and call is_working method:
+
+  ```Perl
+  my $e = new Example();
+  $e->is_working();
+  # Output: Working!
+  ```
+
+</details>
+
+<details>
+<summary><b><i>23.Does Perl have inheritance? What is the `SUPER` keyword?</i></b></summary>
+
+$\color{green}{\text{Answer}}$
+
+Yes, Perl supports inheritance. `SUPER` keyword is used to call a method from the parent class. It gives an example about how we can apply inheritance.
+
+</details>
+
+<details>
+<summary><b><i>24.Does Perl have polymorphism? What is method overriding?</i></b></summary>
+
+$\color{green}{\text{Answer}}$
+
+Yes, it has polymorphism. In fact method overriding is a way to apply it in Perl.
+
+Method overriding in simple words appears when we have a class with a method that already exist in a parent class.
+
+```Perl
+package A;
+
+sub new { return bless {}, shift; };
+sub printMethod { print "A\n"; };
+
+package B;
+
+use parent -norequire, 'A';
+
+sub new { return bless {}, shift; };
+sub printMethod { print "B\n"; };
+
+my $a = A->new();
+my $b = B->new();
+
+A->new()->printMethod();
+B->new()->printMethod();
+
+# Output:
+# A
+# B
+```
+
+</details>
+
+<details>
+<summary><b><i>24.How can you call a method of an inherited class?</i></b></summary>
+
+$\color{green}{\text{Answer}}$
+
+```Perl
+# Class `A` with `printA` method.
+package A;
+
+sub new { return bless {}, shift; };
+sub printA { print "A"; };
+
+# Class `B` that extends or use the parent class `A`.
+package B;
+
+use parent -norequire, 'A';
+
+sub new { return bless {}, shift; };
+
+# Instance class `B` allows call the inherited method
+my $b = B->new();
+$b->printA();
+```
+
+</details>
+
+## Perl Exception Handling
+
+<details>
+<summary><b><i>25.How can we evaluate and capture an exception in Perl?</i></b></summary>
+
+$\color{green}{\text{Answer}}$
+
+`eval` in all its forms is used to execute a little Perl program, trapping any errors encountered so they don't crash the calling program.
+
+Eg:
+```Perl
+eval {
+    die;
+};
+if ($@) {
+    print "Error. Details: $@";
+}
+```
+
+If we execute this we get the next output:
+
+```Perl
+Error. Details: Died at eval.pl line 2.
+```
+
+The `eval` (`try` in another programming languages) is trying to execute a code. This code fails (it's a die), and then the code continues into the `if` condition that evaluates `$@` error variable have something stored. This is like a `catch` in another programming languages. At this way we can handle errors.
+
+## Perl OS
+
+<details>
+<summary><b><i>26.What is Perl Open3?</i></b></summary>
+
+$\color{green}{\text{Answer}}$
+
+"IPC::Open3 - open a process for reading, writing, and error handling using open3()".
+
+With `open3` we can have the full control of the STDIN, STDOUT, STDERR. It's usually used to execute commands.
+
+</details>
+
+<details>
+<summary><b><i>27.Using Open3: Create a file with the size of 15MB and check it's created successfully.</i></b></summary>
+
+$\color{green}{\text{Answer}}$
+
+- Code:
+
+```Perl
+use IPC::Open3;
+use Data::Dumper;
+
+sub execute_command {
+    my @command_to_execute = @_;
+    my ($stdin, $stdout, $stderr);
+    eval {
+        open3($stdin, $stdout, $stderr, @command_to_execute);
+    };
+    if ($@) {
+        print "Error. Details: $@";
+    }
+    close($stdin);
+    return $stdout;
+}
+
+my $file_name = 'perl_open3_test';
+&execute_command('truncate', '-s', '15M', $file_name);
+my $result = &execute_command('stat', '-c', '%s', $file_name);
+print Dumper(<$result>);
+```
+
+- Result:
+
+```Perl
+$ -> perl command.pl 
+$VAR1 = '15728640
+';
+```
+
+</details>
+
+## Perl Packages & Modules
+
+<details>
+<summary><b><i>28.What is a Perl package? And a module?</i></b></summary>
+
+$\color{green}{\text{Answer}}$
+
+With a Perl package we are defining a namespace. A Perl module in one simple word can be defined as a `class`. When we create a `class` in Perl we use the `package` keyword. A module can be used with the use keyword.
+
+</details>
+
+<details>
+<summary><b><i>29.What is the difference between .pl and .pm extensions?</i></b></summary>
+
+$\color{green}{\text{Answer}}$
+
+There's no a real difference between a .pm and .pl extensions. Perl use .pm extensions just to difference it as a perl module (a class). .pl extensions are usually named for perl scripts without OOP classes.
+
+</details>
+
+<details>
+<summary><b><i>30.Why a Perl class (or module) should return something at the end of the file? Check the example.</i></b></summary>
+
+$\color{green}{\text{Answer}}$
+
+If we want to `use` a Perl module (`import` a class), this module should end in a value different than 0. This is necessary because if we try to import the class and it has a false value, we will not be able to use it.
+
+```Perl
+package A;
+
+sub new { return bless {}, shift; };
+sub printMethod { print "A\n"; };
+
+1;
+```
+
+<details>
+<summary><b><i>31.What is cpan? And cpanm?</i></b></summary>
+
+$\color{green}{\text{Answer}}$
+
+- CPAN (Comprehensive Perl Archive Network) is a massive, centralized repository containing over 200,000 modules of open-source Perl code written by thousands of contributors. It serves as the primary ecosystem for Perl developers to find, share, and reuse libraries for everything from database integration and web development to advanced mathematics and system administration.
+
+- cpanm (App::cpanminus) is a popular, lightweight command-line client used to install modules from CPAN. Unlike the traditional CPAN shell, it is designed to be "zero-config," extremely fast, and memory-efficient. It automates the process of downloading, unpacking, building, and installing modules and their dependencies with minimal output, making it the preferred tool for modern Perl development and automated deployment environments.
+
+</details>
+
+<details>
+<summary><b><i>32.How can you install cpanm and a Perl module?</i></b></summary>
+
+There are some different alternatives to install Perl modules. We will use `cpanm.`
+
+- Install `cpanm`:
+
+```Perl
+$ cpan App::cpanminus
+```
+
+- Install the `Test` module with `cpanm`:
+
+```Perl
+cpanm Test
+```
+
+- Now we can test the `Test` installed module:
+
+```Perl
+$ perl -M'Test::Simple tests => 1' -e 'ok( 1 + 1 == 2 );'
+1..1
+ok 1
+```
+
+```Perl
+$ perl -M'Test::Simple tests => 1' -e 'ok( 1 + 1 == 3 );'
+1..1
+not ok 1
+#   Failed test at -e line 1.
+# Looks like you failed 1 test of 1.
+```
