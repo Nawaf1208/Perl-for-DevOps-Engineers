@@ -726,6 +726,8 @@ sub printMethod { print "A\n"; };
 1;
 ```
 
+</details>
+
 <details>
 <summary><b><i>31.What is cpan? And cpanm?</i></b></summary>
 
