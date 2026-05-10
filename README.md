@@ -742,6 +742,8 @@ $\color{green}{\text{Answer}}$
 <details>
 <summary><b><i>32.How can you install cpanm and a Perl module?</i></b></summary>
 
+$\color{green}{\text{Answer}}$
+
 There are some different alternatives to install Perl modules. We will use `cpanm.`
 
 - Install `cpanm`:
