@@ -635,6 +635,8 @@ Error. Details: Died at eval.pl line 2.
 
 The `eval` (`try` in another programming languages) is trying to execute a code. This code fails (it's a die), and then the code continues into the `if` condition that evaluates `$@` error variable have something stored. This is like a `catch` in another programming languages. At this way we can handle errors.
 
+</details>
+
 ## Perl OS
 
 <details>
